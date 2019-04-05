@@ -12,6 +12,10 @@
 		5280569F2254DA530054922D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5280569E2254DA530054922D /* Assets.xcassets */; };
 		528056AA2254E0230054922D /* QuizView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 528056A92254E0230054922D /* QuizView.xib */; };
 		528056AC2254E7CD0054922D /* QuizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528056AB2254E7CD0054922D /* QuizViewController.swift */; };
+		528056B32255039C0054922D /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528056B22255039C0054922D /* Category.swift */; };
+		528056B5225505470054922D /* QuizService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528056B4225505470054922D /* QuizService.swift */; };
+		528056B722554F600054922D /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528056B622554F600054922D /* Question.swift */; };
+		528056B9225566810054922D /* Quiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528056B8225566810054922D /* Quiz.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +26,10 @@
 		528056A32254DA530054922D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		528056A92254E0230054922D /* QuizView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QuizView.xib; sourceTree = "<group>"; };
 		528056AB2254E7CD0054922D /* QuizViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizViewController.swift; sourceTree = "<group>"; };
+		528056B22255039C0054922D /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Category.swift; path = QuizTime/Model/Category.swift; sourceTree = SOURCE_ROOT; };
+		528056B4225505470054922D /* QuizService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizService.swift; sourceTree = "<group>"; };
+		528056B622554F600054922D /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
+		528056B8225566810054922D /* Quiz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quiz.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +93,7 @@
 		528056AF2254F5470054922D /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				528056B4225505470054922D /* QuizService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -92,6 +101,9 @@
 		528056B12254F59F0054922D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				528056B22255039C0054922D /* Category.swift */,
+				528056B622554F600054922D /* Question.swift */,
+				528056B8225566810054922D /* Quiz.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -166,8 +178,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				528056B5225505470054922D /* QuizService.swift in Sources */,
 				528056AC2254E7CD0054922D /* QuizViewController.swift in Sources */,
+				528056B9225566810054922D /* Quiz.swift in Sources */,
 				5280569D2254DA520054922D /* QuizTime.xcdatamodeld in Sources */,
+				528056B722554F600054922D /* Question.swift in Sources */,
+				528056B32255039C0054922D /* Category.swift in Sources */,
 				528056952254DA520054922D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
