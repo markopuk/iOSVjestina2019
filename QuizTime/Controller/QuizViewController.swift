@@ -36,6 +36,7 @@ class QuizViewController : UIViewController {
                     }
                 }
                 else{
+                    
                     let category = quiz?.listOfCategories[0]
                     
                     var nba = 0
@@ -52,14 +53,24 @@ class QuizViewController : UIViewController {
                     
                     self.quiz_title.text = category?.title
                     //TODO dohvat slike s url
-                    let image = category?.image
-                    
-                    if image != nil {
-                        self.quiz_image.image = UIImage(named: image!)
+                    if let imageUrl = category?.image{
+                
+                        //self.quiz_image.image = UIImage(named: image!)
+                        //TODO ovo je url a ne image
+                        quizService.fetchImage(urlString: imageUrl){ (image) in
+                            DispatchQueue.main.async {
+                                if image != nil{
+                                    self.quiz_image.image = UIImage(data:image!)
+                                }
+                                else{
+                                    self.quiz_image.image = UIImage(named:"Image")
+                                }
+                            }
+                        }
                     }
+                
                     
                     self.quiz_title.backgroundColor = UIColor(named :"sportColor")
-                    self.quiz_image.backgroundColor = UIColor(named: "sportColor")
                     
                     let question = category?.questions[0]
                     
@@ -78,7 +89,7 @@ class QuizViewController : UIViewController {
                             let answer_btn = UIButton(frame: CGRect(origin: CGPoint(x: 0, y: height * n + 10), size: CGSize(width: width, height: height)))
                             
                             answer_btn.setTitle(String(n)+". " + answer, for: .normal)
-                            answer_btn.setTitleColor(UIColor.blue, for: .normal)
+                            answer_btn.setTitleColor(UIColor.black, for: .normal)
                             answer_btn.tag = ((question?.correct_answer)! + 1)
                             answer_btn.addTarget(self, action: #selector(QuizViewController.buttonClicked(_:)), for: .touchUpInside)
                             self.custom_view.addSubview(answer_btn)
@@ -95,10 +106,10 @@ class QuizViewController : UIViewController {
     func buttonClicked(_ sender: AnyObject){
         let button = sender as! UIButton
         if (button.title(for: .normal)?.starts(with: String(button.tag)))!{
-            button.backgroundColor = UIColor.green
+            button.backgroundColor = UIColor(named: "correctColor")
         }
         else{
-            button.backgroundColor = UIColor.red
+            button.backgroundColor = UIColor(named: "wrongColor")
         }
     }
     
