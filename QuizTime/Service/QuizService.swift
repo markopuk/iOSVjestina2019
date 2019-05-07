@@ -7,9 +7,11 @@
 //
 
 import Foundation
+import UIKit
 
 class QuizService {
     func fetchQuiz(urlString: String , completion: @escaping ((Quiz?) -> Void)) {
+        
         var listOfCategories : [Category] = []
         if let url = URL(string: urlString) {
             let request = URLRequest(url: url)
@@ -20,7 +22,6 @@ class QuizService {
                 
                     do {
                         let json = try JSONSerialization.jsonObject(with: data, options: [])
-                        
                         
                         if let dictionary = json as? [String: Any] {
                         
@@ -44,7 +45,6 @@ class QuizService {
                         completion(nil)
                     }
                     
-                    
                 } else {
                     completion(nil)
                 }
@@ -62,20 +62,8 @@ class QuizService {
             let request = URLRequest(url: url)
 
             let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
-                
                 if let data = data {
-
-                    do {
-                        let json = try JSONSerialization.jsonObject(with: data, options: [])
-                        
-                        let image = json as? Data
-                        
-                        completion(image)
-                    } catch {
-                        completion(nil)
-                    }
-
-
+                    completion(data)
                 } else {
                     completion(nil)
                 }

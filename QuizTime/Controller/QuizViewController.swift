@@ -12,96 +12,24 @@ class QuizViewController : UIViewController {
     
     @IBOutlet weak var error_label: UILabel!
     
-    @IBOutlet weak var fun_fact_label: UILabel!
-    
     @IBOutlet weak var quiz_title: UILabel!
-    
     
     @IBOutlet weak var quiz_image: UIImageView!
 
+    @IBOutlet weak var scroll_view: UIScrollView!
     
-    @IBOutlet weak var custom_view: UIView!
+    var numberOfCorrectAnswers = 0
+    var startTime = 0
+    var endTime = 0
     
-    @IBAction func btn_dohvati_clicked(_ sender: Any) {
-        
-        let url = "https://iosquiz.herokuapp.com/api/quizzes"
-        
-        let quizService = QuizService()
-        quizService.fetchQuiz(urlString: url){ (quiz) in
-            DispatchQueue.main.async {
-                if quiz?.listOfCategories.count == 0 {
-                    self.error_label.isHidden = false
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
-                        self.error_label.isHidden = true
-                    }
-                }
-                else{
-                    
-                    let category = quiz?.listOfCategories[0]
-                    
-                    var nba = 0
-                    nba += category.map({
-                         return $0.questions
-                        
-                    })?.filter({
-                            return $0.question.contains("NBA")
-                        
-                    }).count ?? 0
-                    
-                    
-                    self.fun_fact_label.text = "Fun fact: there are " + String(nba) + " questions that are connected with NBA"
-                    
-                    self.quiz_title.text = category?.title
-                    //TODO dohvat slike s url
-                    if let imageUrl = category?.image{
-                
-                        //self.quiz_image.image = UIImage(named: image!)
-                        //TODO ovo je url a ne image
-                        quizService.fetchImage(urlString: imageUrl){ (image) in
-                            DispatchQueue.main.async {
-                                if image != nil{
-                                    self.quiz_image.image = UIImage(data:image!)
-                                }
-                                else{
-                                    self.quiz_image.image = UIImage(named:"Image")
-                                }
-                            }
-                        }
-                    }
-                
-                    
-                    self.quiz_title.backgroundColor = UIColor(named :"sportColor")
-                    
-                    let question = category?.questions[0]
-                    
-                    let width = 300
-                    let height = 40
-                    
-                    let question_label = UILabel(frame: CGRect(origin: CGPoint(x: 0, y: 10), size: CGSize(width: width, height: height)))
-                    
-                    question_label.text = question?.question
-                    
-                    self.custom_view.addSubview(question_label)
-                    
-                    if question?.answers != nil{
-                        var n = 1
-                        for answer in (question?.answers)!{
-                            let answer_btn = UIButton(frame: CGRect(origin: CGPoint(x: 0, y: height * n + 10), size: CGSize(width: width, height: height)))
-                            
-                            answer_btn.setTitle(String(n)+". " + answer, for: .normal)
-                            answer_btn.setTitleColor(UIColor.black, for: .normal)
-                            answer_btn.tag = ((question?.correct_answer)! + 1)
-                            answer_btn.addTarget(self, action: #selector(QuizViewController.buttonClicked(_:)), for: .touchUpInside)
-                            self.custom_view.addSubview(answer_btn)
-                            n+=1
-                        }
-                    }
-                }
-                
-            }
-        }
+    @IBAction func btn_start_quiz_clicked(_ sender: Any)
+    {
+        self.scroll_view.isHidden = false
+        numberOfCorrectAnswers = 0
+        startTime = Calendar.current.component(.second, from: Date())
         
     }
+    
     @objc
     func buttonClicked(_ sender: AnyObject){
         let button = sender as! UIButton
@@ -114,8 +42,64 @@ class QuizViewController : UIViewController {
     }
     
     override func viewDidLoad() {
+        let quizService = QuizService()
         
-        error_label.text = "Nažalost ne možemo dohvatiti kviz, pokušajte kasnije."
+        //self.quiz_title.text = category?.title
+        self.quiz_title.text = "naslov"
         
+
+        self.quiz_image.image = UIImage(named:"Image")
+        //self.quiz_title.backgroundColor = UIColor(named : category?.category ?? "SPORTS")
+        self.quiz_title.backgroundColor = UIColor(named : "SPORTS")
+        
+        //setQuestionView(questionList: questions ?? [], width: self.view.frame.width, height: self.scroll_view.frame.height,viewController: self)
+        setQuestionView(questionList: [], width: self.view.frame.width, height: self.scroll_view.frame.height,viewController: self)
+    }
+    
+}
+
+func countNBA(category : Category?) -> Int{
+    return category.map({
+        return $0.questions
+        
+    })?.filter({
+        return $0.question.contains("NBA")
+        
+    }).count ?? 0
+}
+
+func setQuestionView(questionList:[Question],width:CGFloat,height:CGFloat, viewController:QuizViewController){
+
+    let btn_width = 300
+    let btn_height = 40
+
+    for question in questionList{
+        
+        let customView = UIView(frame: CGRect(origin: CGPoint(x:0,y:0), size: CGSize(width: width, height: height)))
+        
+        let questionLabel = UILabel(frame: CGRect(origin: CGPoint(x: 0, y: 10), size: CGSize(width: btn_width, height: btn_height)))
+        
+        questionLabel.text = question.question
+        questionLabel.numberOfLines = 0
+        
+        customView.addSubview(questionLabel)
+        
+        var n = 1
+        for answer in (question.answers){
+            
+            let answer_btn = UIButton(frame: CGRect(origin: CGPoint(x: 0, y: btn_height * n + 10), size: CGSize(width: btn_width, height: btn_height)))
+            
+            answer_btn.setTitle(String(n)+". " + answer, for: .normal)
+            answer_btn.setTitleColor(UIColor.black, for: .normal)
+            answer_btn.tag = ((question.correct_answer) + 1)
+            answer_btn.addTarget(viewController, action: #selector(viewController.buttonClicked(_:)), for: .touchUpInside)
+            customView.addSubview(answer_btn)
+            n+=1
+        }
+        viewController.scroll_view.addSubview(customView)
     }
 }
+
+
+
+

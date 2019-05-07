@@ -21,8 +21,7 @@ class Category{
     
 
     init?(json: Any) {
-        
-        let jsonDict = json as! [String: Any]
+        guard let jsonDict = json as? [String: Any] else { return nil }
 
         let category = jsonDict["category"] as? String
         let description = jsonDict["description"] as? String
@@ -31,20 +30,21 @@ class Category{
         let level = jsonDict["level"] as? Int
         let title = jsonDict["title"] as? String
     
-        self.category = category!
+        self.category = category ?? ""
         self.description = description ?? ""
-        self.id = id!
+        self.id = id ?? 0
         self.image = image ?? ""
         self.level = level!
         self.title = title!
         
         let questions = jsonDict["questions"] as? NSArray
         
-        for q in questions!{
+        /*for q in questions!{
             let question = q as? [String:Any]
             self.questions.append(Question(json: question)!)
             }
-        
+        */
+        self.questions = questions?.compactMap { Question(json: $0) } ?? []
         
     }
 }
