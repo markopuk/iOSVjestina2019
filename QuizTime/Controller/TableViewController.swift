@@ -8,6 +8,7 @@
 
 import UIKit
 import PureLayout
+import Kingfisher
 
 class TableViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -92,18 +93,19 @@ class TableViewController : UIViewController, UITableViewDelegate, UITableViewDa
         return view
     }
     
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        tableView.deselectRow(at: indexPath, animated: true)
-//        let currentCell = tableView.cellForRow(at: indexPath)! as UITableViewCell
-//        showDialog(text: (currentCell.textLabel?.text)!)
-//    }
-//    
-//    func showDialog(text : String)
-//    {
-//        let alert = UIAlertController(title: "Alert", message: text, preferredStyle: UIAlertController.Style.alert)
-//        alert.addAction(UIAlertAction(title: "Click", style: UIAlertAction.Style.default, handler: nil))
-//        self.present(alert, animated: true, completion: nil)
-//    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let key = Array(categoriesDict.keys)[indexPath.section]
+        
+        if let category = categoriesDict[key]?[indexPath.row]{
+            
+            let quizViewController = QuizViewController(quiz_data: category)
+            
+            self.navigationController?.pushViewController(quizViewController, animated: true)
+            
+
+        }
+    }
     
 }
 
@@ -137,69 +139,112 @@ func fetchQuiz(quizService:QuizService, url : String, viewController: TableViewC
 
 func setCellView(category : Category, viewController : TableViewController,cell : UITableViewCell) {
     
-    let imageUrl = category.image
+    let imageUrl = URL(string : category.image)
     
     let view = UIView(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: cell.frame.width, height :cell.frame.height)))
     
+    let imageView = UIImageView ()
     
-    viewController.quizService.fetchImage(urlString: imageUrl){ (image) in
-        DispatchQueue.main.async {
-            
-            let imageView : UIImageView
-            
-            if image != nil{
-                imageView = UIImageView(image: UIImage(data: image!))
-            }
-            else{
-                imageView = UIImageView(image: UIImage(named: "Image"))
-            }
-            
-            imageView.autoSetDimensions(to: CGSize(width: cell.frame.width / 4 , height: cell.frame.height / 3 ))
-            
-            imageView.layer.borderWidth = 3.0
-            imageView.layer.borderColor = UIColor.lightGray.cgColor
-            
-            view.addSubview(imageView)
-            
-            let titleView = UILabel()
-            titleView.text = category.title
-            
-            view.addSubview(titleView)
-            
-            let descriptionView = UILabel()
-            descriptionView.text = category.description
-            descriptionView.numberOfLines = 0
-            
-            view.addSubview(descriptionView)
-            
-            let levelView = UILabel()
-            levelView.text = String(repeating: "*", count: category.level)
-            levelView.textColor = UIColor.blue
-            
-            view.addSubview(levelView)
-            
-            imageView.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
-            imageView.autoPinEdge(toSuperviewEdge: .left, withInset: 20 )
-            imageView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 20)
-            imageView.autoPinEdge(.right, to: .left, of: titleView, withOffset: -5)
-            
-            titleView.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
-            
-            descriptionView.autoPinEdge(.top, to: .bottom, of: titleView, withOffset: 10.0)
-            descriptionView.autoPinEdge(.left, to: .right, of: imageView, withOffset: 10.0)
-            descriptionView.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
-            
-            levelView.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
-            levelView.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
-            levelView.autoPinEdge(.left, to: .right, of: titleView, withOffset: 5.0)
-            
-            
-            
-
-            
-            cell.addSubview(view)
-        }
-    }
+    imageView.kf.setImage(with: imageUrl)
+    
+    imageView.autoSetDimensions(to: CGSize(width: cell.frame.width / 4 , height: cell.frame.height / 3 ))
+    
+    imageView.layer.borderWidth = 3.0
+    imageView.layer.borderColor = UIColor.lightGray.cgColor
+    
+    view.addSubview(imageView)
+    
+    let titleView = UILabel()
+    titleView.text = category.title
+    
+    view.addSubview(titleView)
+    
+    let descriptionView = UILabel()
+    descriptionView.text = category.description
+    descriptionView.numberOfLines = 0
+    
+    view.addSubview(descriptionView)
+    
+    let levelView = UILabel()
+    levelView.text = String(repeating: "*", count: category.level)
+    levelView.textColor = UIColor.blue
+    
+    view.addSubview(levelView)
+    
+    //PureLayout
+    imageView.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
+    imageView.autoPinEdge(toSuperviewEdge: .left, withInset: 20 )
+    imageView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 20)
+    imageView.autoPinEdge(.right, to: .left, of: titleView, withOffset: -5)
+    
+    titleView.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
+    
+    descriptionView.autoPinEdge(.top, to: .bottom, of: titleView, withOffset: 10.0)
+    descriptionView.autoPinEdge(.left, to: .right, of: imageView, withOffset: 10.0)
+    descriptionView.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
+    
+    levelView.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
+    levelView.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
+    levelView.autoPinEdge(.left, to: .right, of: titleView, withOffset: 5.0)
+    
+    
+    cell.addSubview(view)
+    
+//    viewController.quizService.fetchImage(urlString: imageUrl){ (image) in
+//        DispatchQueue.main.async {
+//
+//            let imageView : UIImageView
+//
+//            if image != nil{
+//                imageView = UIImageView(image: UIImage(data: image!))
+//            }
+//            else{
+//                imageView = UIImageView(image: UIImage(named: "Image"))
+//            }
+//
+//            imageView.autoSetDimensions(to: CGSize(width: cell.frame.width / 4 , height: cell.frame.height / 3 ))
+//
+//            imageView.layer.borderWidth = 3.0
+//            imageView.layer.borderColor = UIColor.lightGray.cgColor
+//
+//            view.addSubview(imageView)
+//
+//            let titleView = UILabel()
+//            titleView.text = category.title
+//
+//            view.addSubview(titleView)
+//
+//            let descriptionView = UILabel()
+//            descriptionView.text = category.description
+//            descriptionView.numberOfLines = 0
+//
+//            view.addSubview(descriptionView)
+//
+//            let levelView = UILabel()
+//            levelView.text = String(repeating: "*", count: category.level)
+//            levelView.textColor = UIColor.blue
+//
+//            view.addSubview(levelView)
+//
+//            imageView.autoPinEdge(toSuperviewEdge: .top, withInset: 20)
+//            imageView.autoPinEdge(toSuperviewEdge: .left, withInset: 20 )
+//            imageView.autoPinEdge(toSuperviewEdge: .bottom, withInset: 20)
+//            imageView.autoPinEdge(.right, to: .left, of: titleView, withOffset: -5)
+//
+//            titleView.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
+//
+//            descriptionView.autoPinEdge(.top, to: .bottom, of: titleView, withOffset: 10.0)
+//            descriptionView.autoPinEdge(.left, to: .right, of: imageView, withOffset: 10.0)
+//            descriptionView.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
+//
+//            levelView.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
+//            levelView.autoPinEdge(toSuperviewEdge: .right, withInset: 10)
+//            levelView.autoPinEdge(.left, to: .right, of: titleView, withOffset: 5.0)
+//
+//
+//            cell.addSubview(view)
+//        }
+//    }
     
 }
 
