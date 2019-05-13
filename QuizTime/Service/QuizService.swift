@@ -74,4 +74,87 @@ class QuizService {
         }
 
     }
+    
+    func login(urlString: String, username : String, password: String, completion: @escaping (([String]?) -> Void)) {
+        if let url = URL(string: urlString) {
+            var request = URLRequest(url: url)
+    
+            request.httpMethod = "POST"
+            
+            let postString = "username=" + username + "&" + "password=" + password
+            
+            request.httpBody = postString.data(using: String.Encoding.utf8)
+            
+            let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                if let data = data {
+//                    let response = response as! HTTPURLResponse
+//                    print(response.statusCode)
+                    
+                    do{
+                        let json = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary
+                        
+                        if let parseJSON = json {
+
+                            let token = parseJSON["token"] as? String
+                            let id = parseJSON["id"] as? String
+                            //print (token)
+                            //print (id)
+//                            if token != nil && id != nil {
+//                                completion([token!,id!])
+//                            }
+                            if token != nil {
+                                completion([token!, "1"])
+                            }
+                            else{
+                                completion(nil)
+                            }
+                        }
+                    }
+                    catch{
+                        completion(nil)
+                    }
+                    
+
+                } else {
+                    completion(nil)
+                }
+            }
+            dataTask.resume()
+        } else {
+            completion(nil)
+        }
+    }
+    
+    
+    func sendResults(urlString: String, quizId : Int, userID: Int,numberOfCorrectAnswers: Int, time : Double, completion: @escaping ((String) -> Void)) {
+        if let url = URL(string: urlString) {
+            var request = URLRequest(url: url)
+            
+            request.httpMethod = "POST"
+            
+            //print(NSDecimalNumber(decimal: Decimal(time)).stringValue)
+            //print(numberOfCorrectAnswers)
+            let postString = "quiz_id=" + String(quizId) + "&" + "user_id=" + String(userID) + "&" + "time=" + String(time) + "&" + "no_of_correct=" + String(numberOfCorrectAnswers)
+            
+            request.httpBody = postString.data(using: String.Encoding.utf8)
+            
+            let defaults = UserDefaults.standard
+            
+            let token = defaults.string(forKey: "token")
+            
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.setValue(token, forHTTPHeaderField: "Authorization")
+            
+            let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                let response = response as! HTTPURLResponse
+                completion(String(response.statusCode))
+            }
+                
+            dataTask.resume()
+        } else {
+            completion("bad url")
+        }
+    }
+ 
+   
 }

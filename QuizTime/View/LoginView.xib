@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginViewController" customModule="QuizTime" customModuleProvider="target">
             <connections>
+                <outlet property="error_label" destination="auN-bM-V9z" id="4Vt-uQ-cpb"/>
+                <outlet property="password" destination="BnW-ch-YTe" id="Jzr-Bs-Tda"/>
+                <outlet property="username" destination="XpG-tW-ltu" id="EnV-3z-OKt"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -50,23 +53,39 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aov-wR-d3r">
+                    <rect key="frame" x="164" y="547" width="46" height="30"/>
+                    <state key="normal" title="Login"/>
+                </button>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nažalost login nije uspio, provjerite unesene podatke ili pokušajte kasnije." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="auN-bM-V9z">
+                    <rect key="frame" x="16" y="596" width="343" height="41"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.20399572090000001" green="0.40833890140000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="jFW-cj-9tG" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="81" id="0bR-Hd-Ccn"/>
                 <constraint firstItem="XpG-tW-ltu" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="114" id="5Sa-Gk-f4o"/>
+                <constraint firstItem="auN-bM-V9z" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="97d-mN-5CT"/>
+                <constraint firstItem="Aov-wR-d3r" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="164" id="FZA-rW-I1M"/>
                 <constraint firstItem="XpG-tW-ltu" firstAttribute="trailing" secondItem="jFW-cj-9tG" secondAttribute="trailing" id="HlF-bk-0MQ"/>
                 <constraint firstItem="bLy-hR-jsJ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="43" id="IZe-Ew-bzQ"/>
                 <constraint firstItem="XpG-tW-ltu" firstAttribute="top" secondItem="bLy-hR-jsJ" secondAttribute="bottom" constant="28" id="RTs-rg-AmK"/>
+                <constraint firstItem="auN-bM-V9z" firstAttribute="centerX" secondItem="Aov-wR-d3r" secondAttribute="centerX" id="SRD-vf-Zk0"/>
                 <constraint firstItem="jFW-cj-9tG" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="102" id="aS5-Qf-T5i"/>
+                <constraint firstItem="Aov-wR-d3r" firstAttribute="centerX" secondItem="jFW-cj-9tG" secondAttribute="centerX" id="abw-bJ-mu2"/>
                 <constraint firstItem="BnW-ch-YTe" firstAttribute="top" secondItem="KW0-Uk-ezq" secondAttribute="bottom" constant="34" id="dce-j3-OaG"/>
                 <constraint firstItem="bLy-hR-jsJ" firstAttribute="top" secondItem="jFW-cj-9tG" secondAttribute="bottom" constant="63" id="hsx-lJ-mLR"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="jFW-cj-9tG" secondAttribute="bottom" constant="493" id="iu8-iu-8ft"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Aov-wR-d3r" secondAttribute="bottom" constant="90" id="ky6-Fb-tFq"/>
                 <constraint firstItem="XpG-tW-ltu" firstAttribute="leading" secondItem="BnW-ch-YTe" secondAttribute="leading" id="nKl-ER-GF9"/>
                 <constraint firstItem="bLy-hR-jsJ" firstAttribute="centerX" secondItem="KW0-Uk-ezq" secondAttribute="centerX" id="oKf-6m-FuX"/>
                 <constraint firstItem="XpG-tW-ltu" firstAttribute="trailing" secondItem="BnW-ch-YTe" secondAttribute="trailing" id="qGh-cq-dEc"/>
                 <constraint firstItem="KW0-Uk-ezq" firstAttribute="top" secondItem="XpG-tW-ltu" secondAttribute="bottom" constant="40" id="sig-Rc-Xe2"/>
                 <constraint firstItem="jFW-cj-9tG" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="tu0-1E-saM"/>
+                <constraint firstItem="auN-bM-V9z" firstAttribute="top" secondItem="Aov-wR-d3r" secondAttribute="bottom" constant="19" id="zw5-YN-yyL"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="52" y="54.422788605697157"/>

@@ -68,26 +68,24 @@ class QuizViewController : UIViewController {
             scrollPosition += 1
         }
         else{
-            //poslati rez
             let time = Date().timeIntervalSinceReferenceDate - startTime
             startTime = 0
+            
+            let quizServise = QuizService()
+            let url = "https://iosquiz.herokuapp.com/api/result"
+            
+            quizServise.sendResults(urlString: url, quizId: quizData.id, userID: 1, numberOfCorrectAnswers: numberOfCorrectAnswers, time: time){(responseCode) in
+                DispatchQueue.main.async {
+                    print(responseCode)
+                }
+                
+            }
+            self.navigationController?.popViewController(animated: true)
             
         }
     }
     
     override func viewDidLoad() {
-        let quizService = QuizService()
-        
-//        quizService.fetchImage(urlString: quizData.image){ (image) in
-//            DispatchQueue.main.async {
-//                if image != nil{
-//                    self.quiz_image.image = UIImage(data : image!)!
-//                }
-//                else {
-//                    self.quiz_image.image = UIImage(named : "Image")!
-//                }
-//            }
-//        }
         
         let url = URL(string: quizData.image)
         self.quiz_image.kf.setImage(with: url)
