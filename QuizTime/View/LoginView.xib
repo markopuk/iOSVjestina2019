@@ -56,6 +56,9 @@
                 <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aov-wR-d3r">
                     <rect key="frame" x="164" y="547" width="46" height="30"/>
                     <state key="normal" title="Login"/>
+                    <connections>
+                        <action selector="login_btn_clicked:" destination="-1" eventType="touchUpInside" id="caw-rf-5f8"/>
+                    </connections>
                 </button>
                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nažalost login nije uspio, provjerite unesene podatke ili pokušajte kasnije." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="auN-bM-V9z">
                     <rect key="frame" x="16" y="596" width="343" height="41"/>
