@@ -94,17 +94,17 @@ class QuizService {
                         let json = try JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary
                         
                         if let parseJSON = json {
-
+//                            print(parseJSON.allKeys)
                             let token = parseJSON["token"] as? String
-                            let id = parseJSON["id"] as? String
-                            //print (token)
-                            //print (id)
+                            if token != nil  {
+                                completion([token!,"1"])
+                            }
+//                            let id = parseJSON["user_id"] as? String
+//                            print (token)
+//                            print (id)
 //                            if token != nil && id != nil {
 //                                completion([token!,id!])
 //                            }
-                            if token != nil {
-                                completion([token!, "1"])
-                            }
                             else{
                                 completion(nil)
                             }
@@ -132,11 +132,13 @@ class QuizService {
             
             request.httpMethod = "POST"
             
-            //print(NSDecimalNumber(decimal: Decimal(time)).stringValue)
-            //print(numberOfCorrectAnswers)
-            let postString = "quiz_id=" + String(quizId) + "&" + "user_id=" + String(userID) + "&" + "time=" + String(time) + "&" + "no_of_correct=" + String(numberOfCorrectAnswers)
+            let params = ["quiz_id" : String(quizId), "user_id": String(userID), "time": String(time), "no_of_correct": String(numberOfCorrectAnswers)]
             
-            request.httpBody = postString.data(using: String.Encoding.utf8)
+            do{
+                request.httpBody = try JSONSerialization.data(withJSONObject: params, options: .prettyPrinted)
+            }catch let error{
+                print("greška sa slanjem parametara:" + error.localizedDescription)
+            }
             
             let defaults = UserDefaults.standard
             
