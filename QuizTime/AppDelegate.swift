@@ -18,12 +18,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        let defaults = UserDefaults.standard
         
         window = UIWindow(frame: UIScreen.main.bounds)
         
         let vc = TableViewController()
+        let login_vc = LoginViewController()
         
-        let navigationController = UINavigationController(rootViewController: vc)
+        let navigationController : UINavigationController
+        
+        if defaults.string(forKey: "token") == nil{
+            navigationController = UINavigationController(rootViewController: login_vc)
+        }
+        else{
+            navigationController = UINavigationController(rootViewController: vc)
+        }
+        
+        
         
         window?.rootViewController = navigationController
         

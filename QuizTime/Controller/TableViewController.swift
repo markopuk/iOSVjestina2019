@@ -42,12 +42,6 @@ class TableViewController : UIViewController, UITableViewDelegate, UITableViewDa
     
     override func viewDidLoad() {
         
-        if defaults.string(forKey: "token") == nil{
-            let loginViewController = LoginViewController()
-            
-            self.navigationController?.pushViewController(loginViewController, animated: true)
-        }
-        
         fetchQuiz(quizService: quizService, url: url, viewController: self)
         
         tableView = UITableView(frame: self.view.bounds, style: UITableView.Style.plain)

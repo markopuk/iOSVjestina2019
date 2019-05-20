@@ -53,7 +53,9 @@ func userLogin(url : String, username: String, password : String ,viewController
                     defaults.set(token, forKey: "token")
                     defaults.set(id, forKey: "id")
                 }
-            viewController.navigationController?.popViewController(animated: true)
+                let tableViewController = TableViewController()
+                
+                viewController.navigationController?.pushViewController(tableViewController, animated: true)
             }
             
         }

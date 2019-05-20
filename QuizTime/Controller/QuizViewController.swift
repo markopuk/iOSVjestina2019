@@ -19,6 +19,9 @@ class QuizViewController : UIViewController {
 
     @IBOutlet weak var scroll_view: UIScrollView!
     
+    @IBOutlet weak var number_of_correct_answers_label: UILabel!
+    
+    @IBOutlet weak var time_label: UILabel!
     
     var numberOfCorrectAnswers = 0
     var startTime = 0.0
@@ -69,7 +72,7 @@ class QuizViewController : UIViewController {
         }
         else{
             let time = Date().timeIntervalSinceReferenceDate - startTime
-            startTime = 0
+            //startTime = 0
             
             let quizServise = QuizService()
             let url = "https://iosquiz.herokuapp.com/api/result"
@@ -80,7 +83,21 @@ class QuizViewController : UIViewController {
                 }
                 
             }
-            self.navigationController?.popViewController(animated: true)
+            
+            self.scroll_view.setContentOffset(CGPoint(x: Int(self.view.frame.width) * scrollPosition, y: 0), animated: true)
+            
+            
+            let results = "Score : " + String(numberOfCorrectAnswers) + "\n" + "time : " + String(time)
+            
+            let result_label = UILabel(frame: CGRect(origin: CGPoint(x: 300 * (quizData.questions.count),y:100), size: CGSize(width: 300, height: 100)))
+            
+            result_label.text = results
+            
+            self.scroll_view.addSubview(result_label)
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                self.navigationController?.popViewController(animated: true)
+            }
             
         }
     }
@@ -95,6 +112,7 @@ class QuizViewController : UIViewController {
         self.quiz_title.backgroundColor = UIColor(named : quizData.category)
         
         setQuestionView(questionList: quizData.questions, width: self.view.frame.width, height: self.scroll_view.frame.height,viewController: self)
+    
         
     }
     
