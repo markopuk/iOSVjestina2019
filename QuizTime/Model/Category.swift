@@ -19,6 +19,15 @@ class Category{
     var questions : [Question] = []
     let title : String
     
+    init(category : String, description: String, id : Int, image : String, level : Int, questions : [Question], title : String){
+        self.category = category
+        self.description = description
+        self.id = id
+        self.image = image
+        self.level = level
+        self.questions = questions
+        self.title = title
+    }
 
     init?(json: Any) {
         guard let jsonDict = json as? [String: Any] else { return nil }

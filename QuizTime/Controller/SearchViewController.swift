@@ -1,75 +1,78 @@
 //
-//  TableViewController.swift
+//  SearchViewController.swift
 //  QuizTime
 //
-//  Created by Five on 06/05/2019.
+//  Created by Five on 26/06/2019.
 //  Copyright © 2019 Five. All rights reserved.
 //
 
 import UIKit
-import PureLayout
-import Kingfisher
 import CoreData
 
-class TableViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SearchViewController: UIViewController ,UITableViewDelegate, UITableViewDataSource{
+
     
+    @IBOutlet weak var tableView: UIView!
+    @IBOutlet weak var searchTextField: UITextField!
+        
+    @IBAction func searchBtnTapped(_ sender: Any) {
     
-    @IBOutlet weak var error_label: UILabel!
-    
-    let url = "https://iosquiz.herokuapp.com/api/quizzes"
+        let searchWord = searchTextField.text
+        if searchWord!.count > 0{
+            categoriesDict = [:]
+        }
+        else{
+            categoriesDict = allCategoriesDict
+        }
+        for categoryType in allCategoriesDict.keys{
+            for category in allCategoriesDict[categoryType]!{
+                if category.title.lowercased().contains(searchWord!) || category.description.lowercased().contains(searchWord!){
+                    if categoriesDict.keys.contains(category.category){
+                         categoriesDict[category.category]?.append(category)
+                    }
+                    else{
+                        categoriesDict[category.category] = [category]
+                    }
+                }
+            }
+        }
+        sTableView.reloadData()
+    }
     
     let quizService = QuizService()
     
+    var sTableView = UITableView()
+    
     var categoriesDict : [String : [Category]] = [:]
-    
-    var categories : [Category] = []
-    
-    var images : [UIImage] = []
-    
-    var tableView = UITableView()
-    
-    let defaults = UserDefaults.standard
-    
-//    @objc
-//    func logoutButtonClicked(_ sender: AnyObject){
-//
-//        defaults.removeObject(forKey: "token")
-//
-//        let loginVC = LoginViewController()
-//
-//        let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate
-//
-//        appDelegate.window?.rootViewController = loginVC
-//    }
+    var allCategoriesDict : [String : [Category]] = [:]
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+
+        fetchQuiz(quizService: quizService, viewController: self)
         
-        fetchQuiz(quizService: quizService, url: url, viewController: self)
+        sTableView = UITableView(frame: self.view.bounds, style: UITableView.Style.plain)
+        sTableView.dataSource = self
+        sTableView.delegate = self
+        sTableView.backgroundColor = UIColor.white
         
-        tableView = UITableView(frame: self.view.bounds, style: UITableView.Style.plain)
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.backgroundColor = UIColor.white
-        
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        sTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         
         let barHeight: CGFloat = UIApplication.shared.statusBarFrame.size.height
         let displayWidth: CGFloat = self.view.frame.width
-        let displayHeight: CGFloat = self.view.frame.height - self.error_label.frame.height - 20
+        let displayHeight: CGFloat = self.view.frame.height - searchTextField.frame.height
         
-        //tableView.contentInset.top = 20
-        tableView.frame = CGRect(x: 0, y: barHeight, width: displayWidth, height: displayHeight - barHeight)
+        sTableView.frame = CGRect(x: 0, y: barHeight, width: displayWidth, height: displayHeight - barHeight)
         
-        view.addSubview(tableView)
+        tableView.addSubview(sTableView)
+
         
-//        self.tableView.estimatedRowHeight = 400
-//        self.tableView.rowHeight = UITableView.automaticDimension
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
-
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
@@ -81,7 +84,7 @@ class TableViewController : UIViewController, UITableViewDelegate, UITableViewDa
         }
         
         return cell
-
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -99,19 +102,19 @@ class TableViewController : UIViewController, UITableViewDelegate, UITableViewDa
         return categoriesDict.keys.count + 1
     }
     
-
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView()
         
         if section > Array(categoriesDict.keys).count - 1 {
-//            // logout section
-//            let title = UIButton(frame: CGRect(origin: CGPoint(x: 0, y: 0 ), size: CGSize(width: 300, height: 60)))
-//            title.setTitle("log out", for: .normal)
-//            title.setTitleColor(UIColor.blue, for: .normal)
-//            title.addTarget(self, action: #selector(self.logoutButtonClicked(_:)), for: .touchUpInside)
-//            view.addSubview(title)
-//            
-//            title.autoCenterInSuperview()
+            //            // logout section
+            //            let title = UIButton(frame: CGRect(origin: CGPoint(x: 0, y: 0 ), size: CGSize(width: 300, height: 60)))
+            //            title.setTitle("log out", for: .normal)
+            //            title.setTitleColor(UIColor.blue, for: .normal)
+            //            title.addTarget(self, action: #selector(self.logoutButtonClicked(_:)), for: .touchUpInside)
+            //            view.addSubview(title)
+            //
+            //            title.autoCenterInSuperview()
         }
         else{
             let title = UILabel()
@@ -138,15 +141,14 @@ class TableViewController : UIViewController, UITableViewDelegate, UITableViewDa
             let quizViewController = QuizViewController(quiz_data: category)
             
             self.navigationController?.pushViewController(quizViewController, animated: true)
-        
+            
         }
     }
     
-    
-    
+
 }
 
-func fetchQuiz(quizService:QuizService, url : String, viewController: TableViewController){
+func fetchQuiz(quizService:QuizService, viewController: SearchViewController){
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     let context = appDelegate.persistentContainer.viewContext
@@ -200,95 +202,20 @@ func fetchQuiz(quizService:QuizService, url : String, viewController: TableViewC
                 viewController.categoriesDict[category.category] = [category]
             }
             
-            viewController.categories.append(category)
-            
         }
         print("postavljene kategorije iz baze")
         //viewController.categoriesDict = [:]
-        viewController.tableView.reloadData()
+        print(viewController.categoriesDict.keys)
+        viewController.allCategoriesDict = viewController.categoriesDict
+        viewController.sTableView.reloadData()
     }
     catch{
         print("error in reading data from core data")
     }
     
-    // update sa servera ako je moguce
-    
-    quizService.fetchQuiz(urlString: url){ (quiz) in
-        DispatchQueue.main.async {
-            if quiz == nil{
-                
-                viewController.error_label.isHidden = false
-                viewController.error_label.text = "Nažalost ne možemo dohvatiti online izdanje kviza, pokušajte kasnije."
-                DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
-                    viewController.error_label.isHidden = true
-                }
-            }
-            else{
-                viewController.categories = quiz?.listOfCategories ?? []
-                for category in quiz?.listOfCategories ?? []{
-                    if viewController.categoriesDict.keys.contains(category.category){
-                        let isInDict = viewController.categoriesDict[category.category]?.contains{ element in
-                            if case category.id = element.id {
-                                return true
-                            } else {
-                                return false
-                            }
-                        }
-                        if !isInDict!{
-                            viewController.categoriesDict[category.category]?.append(category)
-                        }
-                    }
-                    else{
-                       viewController.categoriesDict[category.category] = [category]
-                    }
-                }
-
-                viewController.tableView.reloadData()
-                
-                //spremanje promjene u bazu
-                
-                for categoryType in viewController.categoriesDict.keys {
-                    
-                    for category in viewController.categoriesDict[categoryType] ?? []{
-                        
-                        let newCategory = Categories(context: context)
-                        
-                        newCategory.setValue(category.id, forKey: "id")
-                        newCategory.setValue(category.title, forKey: "title")
-                        newCategory.setValue(category.description, forKey: "categoryDescription")
-                        newCategory.setValue(category.image, forKey: "image")
-                        newCategory.setValue(category.level, forKey: "level")
-                        newCategory.setValue(category.category, forKey: "category")
-                        
-                        let questions = category.questions
-                        for question in questions {
-                            let newQuestion = Questions(context: context)
-                            
-                            newQuestion.setValue(question.answers, forKey: "answers")
-                            newQuestion.setValue(question.correct_answer, forKey: "correctAnswer")
-                            newQuestion.setValue(question.id, forKey: "id")
-                            newQuestion.setValue(question.question, forKey: "question")
-                            
-                            newCategory.addToQuestions(newQuestion)
-                            
-                        }
-                        
-                        do {
-                            try context.save()
-                            print("entry saved")
-                            
-                        } catch {
-                            print("failed to write entry to base")
-                        }
-                    }
-                }
-            }
-            
-        }
-    }
 }
 
-func setCellView(category : Category, viewController : TableViewController,cell : UITableViewCell) {
+func setCellView(category : Category, viewController : SearchViewController,cell : UITableViewCell) {
     
     let imageUrl = URL(string : category.image)
     
@@ -338,7 +265,7 @@ func setCellView(category : Category, viewController : TableViewController,cell 
     
     levelView.autoPinEdge(toSuperviewEdge: .top, withInset: 10)
     levelView.autoPinEdge(toSuperviewEdge: .right, withInset: 20)
-//    levelView.autoPinEdge(.left, to: .right, of: titleView, withOffset: 5.0)
+    //    levelView.autoPinEdge(.left, to: .right, of: titleView, withOffset: 5.0)
     
     let oldView = cell.subviews[0] as UIView
     oldView.removeFromSuperview()
@@ -347,11 +274,8 @@ func setCellView(category : Category, viewController : TableViewController,cell 
     blankView.backgroundColor = .white
     cell.addSubview(blankView)
     cell.addSubview(view)
-
+    
     
     
 }
-
-
-
 

@@ -157,6 +157,37 @@ class QuizService {
             completion("bad url")
         }
     }
- 
+    
+    func getLeaderboard(urlString : String, quizID : Int, completion: @escaping ((Data?) -> Void)) {
+        if let url = URL(string: urlString) {
+            var request = URLRequest(url: url)
+            
+            request.httpMethod = "GET"
+            
+            let params = ["quiz_id" : String(quizID)]
+            
+            do{
+                request.httpBody = try JSONSerialization.data(withJSONObject: params, options: .prettyPrinted)
+            }catch let error{
+                print("greška sa slanjem parametara:" + error.localizedDescription)
+            }
+            
+            let defaults = UserDefaults.standard
+            
+            let token = defaults.string(forKey: "token")
+            
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.setValue(token, forHTTPHeaderField: "Authorization")
+            
+            let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
+                let response = response as! HTTPURLResponse
+                completion(data)
+            }
+            
+            dataTask.resume()
+        } else {
+            completion(nil)
+        }
+    }
    
 }

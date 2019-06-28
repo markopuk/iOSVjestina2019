@@ -11,21 +11,25 @@ import Kingfisher
 
 class QuizViewController : UIViewController {
     
-    @IBOutlet weak var error_label: UILabel!
-    
     @IBOutlet weak var quiz_title: UILabel!
     
     @IBOutlet weak var quiz_image: UIImageView!
 
     @IBOutlet weak var scroll_view: UIScrollView!
     
-    @IBOutlet weak var number_of_correct_answers_label: UILabel!
-    
-    @IBOutlet weak var time_label: UILabel!
+    @IBAction func leaderboardBtnClicked(_ sender: Any) {
+        
+        let leaderboardViewController = LeaderboardViewController(quiz_id: quizData.id)
+        
+        self.navigationController?.pushViewController(leaderboardViewController, animated: true)
+        
+    }
     
     var numberOfCorrectAnswers = 0
     var startTime = 0.0
     var endTime = 0
+    
+    var screenWidth = 0.0
     
     var scrollPosition = 1
     
@@ -87,11 +91,13 @@ class QuizViewController : UIViewController {
             self.scroll_view.setContentOffset(CGPoint(x: Int(self.view.frame.width) * scrollPosition, y: 0), animated: true)
             
             
-            let results = "Score : " + String(numberOfCorrectAnswers) + "\n" + "time : " + String(time)
+            let results = "Score : " + String(numberOfCorrectAnswers) + "\n" + "time : " + String(Int(time)) + " seconds"
             
-            let result_label = UILabel(frame: CGRect(origin: CGPoint(x: 300 * (quizData.questions.count),y:100), size: CGSize(width: 300, height: 100)))
+            let result_label = UILabel(frame: CGRect(origin: CGPoint(x: Int(screenWidth) * (quizData.questions.count) + 10 ,y:100), size: CGSize(width: 300, height: 100)))
             
             result_label.text = results
+            result_label.numberOfLines = 0
+            result_label.textAlignment = .center
             
             self.scroll_view.addSubview(result_label)
 
@@ -110,6 +116,8 @@ class QuizViewController : UIViewController {
         self.quiz_title.text = quizData.title
         
         self.quiz_title.backgroundColor = UIColor(named : quizData.category)
+        
+        screenWidth = Double(self.view.frame.width)
         
         setQuestionView(questionList: quizData.questions, width: self.view.frame.width, height: self.scroll_view.frame.height,viewController: self)
     
@@ -136,7 +144,7 @@ func setQuestionView(questionList:[Question],width:CGFloat,height:CGFloat, viewC
     var i = 0.0
     for question in questionList{
         
-        let customView = UIView(frame: CGRect(origin: CGPoint(x: Double(width) * i,y:0), size: CGSize(width: width, height: height)))
+        let customView = UIView(frame: CGRect(origin: CGPoint(x: Double(width) * i + 10,y:0), size: CGSize(width: width, height: height)))
         
         let questionLabel = UILabel(frame: CGRect(origin: CGPoint(x: 0, y: 10), size: CGSize(width: btn_width, height: 80)))
         

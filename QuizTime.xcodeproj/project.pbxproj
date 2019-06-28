@@ -12,7 +12,7 @@
 		5270CFA822820A5900092358 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5270CFA622820A5900092358 /* LoginViewController.swift */; };
 		5270CFAA22820A9800092358 /* LoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5270CFA722820A5900092358 /* LoginView.xib */; };
 		528056952254DA520054922D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528056942254DA520054922D /* AppDelegate.swift */; };
-		5280569D2254DA520054922D /* QuizTime.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5280569B2254DA520054922D /* QuizTime.xcdatamodeld */; };
+		5280569D2254DA520054922D /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5280569B2254DA520054922D /* Model.xcdatamodeld */; };
 		5280569F2254DA530054922D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5280569E2254DA530054922D /* Assets.xcassets */; };
 		528056AA2254E0230054922D /* QuizView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 528056A92254E0230054922D /* QuizView.xib */; };
 		528056AC2254E7CD0054922D /* QuizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528056AB2254E7CD0054922D /* QuizViewController.swift */; };
@@ -20,6 +20,13 @@
 		528056B5225505470054922D /* QuizService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528056B4225505470054922D /* QuizService.swift */; };
 		528056B722554F600054922D /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528056B622554F600054922D /* Question.swift */; };
 		528056B9225566810054922D /* Quiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528056B8225566810054922D /* Quiz.swift */; };
+		5296345622C35D9100218BE4 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5296345522C35D9100218BE4 /* TabBarViewController.swift */; };
+		5296345922C36C3800218BE4 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5296345722C36C3800218BE4 /* SettingsViewController.swift */; };
+		5296345A22C36C3800218BE4 /* SettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5296345822C36C3800218BE4 /* SettingsView.xib */; };
+		5296345D22C371BA00218BE4 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5296345B22C371BA00218BE4 /* SearchViewController.swift */; };
+		5296345E22C371BA00218BE4 /* SearchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5296345C22C371BA00218BE4 /* SearchView.xib */; };
+		5296346122C4B87D00218BE4 /* LeaderboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5296345F22C4B87D00218BE4 /* LeaderboardViewController.swift */; };
+		5296346222C4B87D00218BE4 /* LeaderboardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5296346022C4B87D00218BE4 /* LeaderboardView.xib */; };
 		888051DAC4628A7729E16100 /* Pods_QuizTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31C17F81A8FD55D436A4BB17 /* Pods_QuizTime.framework */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +48,13 @@
 		528056B4225505470054922D /* QuizService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizService.swift; sourceTree = "<group>"; };
 		528056B622554F600054922D /* Question.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 		528056B8225566810054922D /* Quiz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quiz.swift; sourceTree = "<group>"; };
+		5296345522C35D9100218BE4 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		5296345722C36C3800218BE4 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		5296345822C36C3800218BE4 /* SettingsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsView.xib; sourceTree = "<group>"; };
+		5296345B22C371BA00218BE4 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		5296345C22C371BA00218BE4 /* SearchView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchView.xib; sourceTree = "<group>"; };
+		5296345F22C4B87D00218BE4 /* LeaderboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardViewController.swift; sourceTree = "<group>"; };
+		5296346022C4B87D00218BE4 /* LeaderboardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LeaderboardView.xib; sourceTree = "<group>"; };
 		555A4A7807D8F6E5A82350BF /* Pods-QuizTime.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QuizTime.debug.xcconfig"; path = "Target Support Files/Pods-QuizTime/Pods-QuizTime.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -84,7 +98,6 @@
 				528056942254DA520054922D /* AppDelegate.swift */,
 				5280569E2254DA530054922D /* Assets.xcassets */,
 				528056A32254DA530054922D /* Info.plist */,
-				5280569B2254DA520054922D /* QuizTime.xcdatamodeld */,
 			);
 			path = QuizTime;
 			sourceTree = "<group>";
@@ -92,7 +105,10 @@
 		528056AD2254F5170054922D /* View */ = {
 			isa = PBXGroup;
 			children = (
+				5296345C22C371BA00218BE4 /* SearchView.xib */,
+				5296345822C36C3800218BE4 /* SettingsView.xib */,
 				5270CFA722820A5900092358 /* LoginView.xib */,
+				5296346022C4B87D00218BE4 /* LeaderboardView.xib */,
 				528056A92254E0230054922D /* QuizView.xib */,
 				5270CFA32280838600092358 /* TableView.xib */,
 			);
@@ -103,8 +119,12 @@
 			isa = PBXGroup;
 			children = (
 				528056AB2254E7CD0054922D /* QuizViewController.swift */,
+				5296345722C36C3800218BE4 /* SettingsViewController.swift */,
+				5296345B22C371BA00218BE4 /* SearchViewController.swift */,
+				5296345522C35D9100218BE4 /* TabBarViewController.swift */,
 				5270CFA622820A5900092358 /* LoginViewController.swift */,
 				5270CFA22280838600092358 /* TableViewController.swift */,
+				5296345F22C4B87D00218BE4 /* LeaderboardViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -123,6 +143,7 @@
 				528056B22255039C0054922D /* Category.swift */,
 				528056B622554F600054922D /* Question.swift */,
 				528056B8225566810054922D /* Quiz.swift */,
+				5280569B2254DA520054922D /* Model.xcdatamodeld */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -204,10 +225,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5296346222C4B87D00218BE4 /* LeaderboardView.xib in Resources */,
 				5270CFA52280838600092358 /* TableView.xib in Resources */,
 				528056AA2254E0230054922D /* QuizView.xib in Resources */,
+				5296345E22C371BA00218BE4 /* SearchView.xib in Resources */,
 				5270CFAA22820A9800092358 /* LoginView.xib in Resources */,
 				5280569F2254DA530054922D /* Assets.xcassets in Resources */,
+				5296345A22C36C3800218BE4 /* SettingsView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,12 +295,16 @@
 			files = (
 				5270CFA822820A5900092358 /* LoginViewController.swift in Sources */,
 				528056B5225505470054922D /* QuizService.swift in Sources */,
+				5296346122C4B87D00218BE4 /* LeaderboardViewController.swift in Sources */,
+				5296345922C36C3800218BE4 /* SettingsViewController.swift in Sources */,
 				528056AC2254E7CD0054922D /* QuizViewController.swift in Sources */,
 				528056B9225566810054922D /* Quiz.swift in Sources */,
 				5270CFA42280838600092358 /* TableViewController.swift in Sources */,
-				5280569D2254DA520054922D /* QuizTime.xcdatamodeld in Sources */,
+				5296345D22C371BA00218BE4 /* SearchViewController.swift in Sources */,
+				5280569D2254DA520054922D /* Model.xcdatamodeld in Sources */,
 				528056B722554F600054922D /* Question.swift in Sources */,
 				528056B32255039C0054922D /* Category.swift in Sources */,
+				5296345622C35D9100218BE4 /* TabBarViewController.swift in Sources */,
 				528056952254DA520054922D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -462,13 +490,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		5280569B2254DA520054922D /* QuizTime.xcdatamodeld */ = {
+		5280569B2254DA520054922D /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				5280569C2254DA520054922D /* QuizTime.xcdatamodel */,
 			);
 			currentVersion = 5280569C2254DA520054922D /* QuizTime.xcdatamodel */;
-			path = QuizTime.xcdatamodeld;
+			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

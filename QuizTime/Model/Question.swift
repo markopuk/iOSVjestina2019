@@ -14,6 +14,13 @@ class Question{
     let id : Int
     let question : String
 
+    init(answers: [String], correctAnswer : Int, id : Int, question : String){
+        self.answers = answers
+        self.correct_answer = correctAnswer
+        self.id = id
+        self.question = question
+    }
+    
     init?(json: Any) {
 
         if let jsonDict = json as? [String: Any],
