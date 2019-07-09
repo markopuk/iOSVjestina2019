@@ -164,13 +164,13 @@ class QuizService {
             
             request.httpMethod = "GET"
             
-            let params = ["quiz_id" : String(quizID)]
+            //let params = ["quiz_id" : String(quizID)]
             
-            do{
-                request.httpBody = try JSONSerialization.data(withJSONObject: params, options: .prettyPrinted)
-            }catch let error{
-                print("greška sa slanjem parametara:" + error.localizedDescription)
-            }
+//            do{
+//                request.httpBody = try JSONSerialization.data(withJSONObject: params, options: .prettyPrinted)
+//            }catch let error{
+//                print("greška sa slanjem parametara:" + error.localizedDescription)
+//            }
             
             let defaults = UserDefaults.standard
             

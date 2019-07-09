@@ -29,8 +29,10 @@ class LeaderboardViewController: UIViewController, UITableViewDelegate, UITableV
         super.viewDidLoad()
 
         let quizService = QuizService()
-        let urlString = "https://iosquiz.herokuapp.com/api/score"
+        let urlString = "https://iosquiz.herokuapp.com/api/score?quiz_id=\(quizID)"
+        
         quizService.getLeaderboard(urlString: urlString, quizID: quizID){ (results) in
+            
             
             DispatchQueue.main.async {
 
